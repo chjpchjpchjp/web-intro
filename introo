@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Seonghyeon's Birthday World</title>
+
+<!-- Calligraphy font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Allura&display=swap"
+    rel="stylesheet"
+>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+
+    margin: 0;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+
+    background: #06152f;
+}
+
+
+/* =========================================================
+   BIRTHDAY WORLD
+========================================================= */
+
+#world {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #8fd2ee 0%,
+            #c5e9f5 50%,
+            #f5f9f7 100%
+        );
+
+    overflow: hidden;
+}
+
+
+/*
+   The world becomes night after
+   the intro disappears.
+
+   This is where the fireworks
+   will actually happen.
+*/
+
+#world.night {
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #102b5c 0%,
+            #071a3b 45%,
+            #030b1d 100%
+        );
+
+    transition:
+        background 1.2s ease;
+}
+
+
+/* =========================================================
+   FIREWORK CANVAS
+========================================================= */
+
+#fireworks {
+
+    position: fixed;
+
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+
+/* =========================================================
+   HAPPY BIRTHDAY TEXT
+========================================================= */
+
+#birthdayMessage {
+
+    position: fixed;
+
+    z-index: 20;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%)
+        scale(.8);
+
+    width: 90%;
+
+    text-align: center;
+
+    color: white;
+
+    font-family: "Allura", cursive;
+
+    font-size:
+        clamp(
+            55px,
+            8vw,
+            125px
+        );
+
+    line-height: 1;
+
+    text-shadow:
+
+        0 0 5px rgba(255,255,255,.8),
+
+        0 0 15px rgba(160,210,255,.9),
+
+        0 0 35px rgba(80,160,255,.7),
+
+        0 0 70px rgba(50,120,255,.45);
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/*
+   Text appears after entering the world
+*/
+
+#birthdayMessage.show {
+
+    animation:
+        birthdayAppear
+        2s
+        cubic-bezier(.16,1,.3,1)
+        forwards;
+}
+
+
+@keyframes birthdayAppear {
+
+    0% {
+
+        opacity: 0;
+
+        transform:
+            translate(-50%, -50%)
+            scale(.55);
+
+        filter:
+            blur(12px);
+    }
+
+    60% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1.05);
+
+        filter:
+            blur(0);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform:
+            translate(-50%, -50%)
+            scale(1);
+    }
+}
+
+
+/* =========================================================
+   INTRO DARK OVERLAY
+========================================================= */
+
+#intro {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        rgba(0,0,0,.48);
+
+    opacity: 1;
+
+    transition:
+        opacity 900ms ease;
+}
+
+
+/*
+   Completely disappear after
+   transition
+*/
+
+#intro.closing {
+
+    opacity: 0;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   PSD PANEL
+========================================================= */
+
+.intro-panel {
+
+    position: relative;
+
+    width: 100vw;
+
+    height: 68.83vw;
+
+    max-width: 145.1vh;
+
+    max-height: 100vh;
+
+    aspect-ratio:
+        12000 / 8270;
+
+    background-image:
+        url("intro-welcome.jpg");
+
+    background-position:
+        center;
+
+    background-size:
+        100% 100%;
+
+    background-repeat:
+        no-repeat;
+
+    /*
+       Start above screen
+    */
+
+    transform:
+        translateY(-115vh);
+
+    animation:
+        dropIn
+        1100ms
+        cubic-bezier(.16,1.15,.35,1)
+        120ms
+        forwards;
+}
+
+
+/* =========================================================
+   NICKNAME INPUT
+========================================================= */
+
+#nickname {
+
+    position: absolute;
+
+    left: 40%;
+    top: 70%;
+
+    width: 21.5%;
+    height: 4.5%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #fffdf0;
+
+    text-align: center;
+
+    font-family:
+        "Trebuchet MS",
+        Arial,
+        sans-serif;
+
+    font-size:
+        clamp(
+            18px,
+            2.2vw,
+            34px
+        );
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+#nickname::placeholder {
+
+    color: transparent;
+}
+
+
+/* =========================================================
+   START BUTTON
+========================================================= */
+
+#startButton {
+
+    position: absolute;
+
+    left: 33.2%;
+    top: 79%;
+
+    width: 34%;
+    height: 9%;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    border-radius: 999px;
+}
+
+
+#startButton:focus-visible {
+
+    outline:
+        3px solid white;
+
+    outline-offset:
+        5px;
+}
+
+
+/* =========================================================
+   SPARKLES AROUND INTRO
+========================================================= */
+
+.sparkle {
+
+    position: absolute;
+
+    z-index: 5;
+
+    width: 8px;
+    height: 8px;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    color: #fffbea;
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(255,255,255,.9)
+        );
+
+    animation:
+        twinkle
+        1.8s
+        ease-in-out
+        infinite;
+}
+
+
+.sparkle::before,
+.sparkle::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    background:
+        currentColor;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius: 999px;
+}
+
+
+.sparkle::before {
+
+    width: 2px;
+    height: 14px;
+}
+
+
+.sparkle::after {
+
+    width: 14px;
+    height: 2px;
+}
+
+
+/* sparkle positions */
+
+.s1 {
+    left: 34%;
+    top: 25%;
+    animation-delay: .1s;
+}
+
+.s2 {
+    left: 72%;
+    top: 24%;
+    animation-delay: .5s;
+}
+
+.s3 {
+    left: 77%;
+    top: 38%;
+    animation-delay: .9s;
+}
+
+.s4 {
+    left: 29%;
+    top: 39%;
+    animation-delay: 1.2s;
+}
+
+.s5 {
+    left: 66%;
+    top: 44%;
+    animation-delay: .3s;
+}
+
+.s6 {
+    left: 39%;
+    top: 48%;
+    animation-delay: 1.5s;
+}
+
+
+@keyframes twinkle {
+
+    0%,
+    100% {
+
+        opacity: 0;
+
+        transform:
+            scale(.25)
+            rotate(45deg);
+    }
+
+    35% {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            rotate(45deg);
+    }
+
+    65% {
+
+        opacity: .75;
+
+        transform:
+            scale(.65)
+            rotate(45deg);
+    }
+}
+
+
+/* =========================================================
+   INTRO ENTER ANIMATION
+========================================================= */
+
+@keyframes dropIn {
+
+    0% {
+
+        transform:
+            translateY(-115vh);
+    }
+
+    70% {
+
+        transform:
+            translateY(2.5%);
+    }
+
+    100% {
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================================================
+   INTRO EXIT
+========================================================= */
+
+#intro.exiting
+.intro-panel {
+
+    animation:
+        slideAway
+        850ms
+        cubic-bezier(.7,0,.2,1)
+        forwards;
+}
+
+
+#intro.exiting
+.sparkle {
+
+    animation:
+        sparkleAway
+        500ms
+        ease
+        forwards;
+}
+
+
+@keyframes slideAway {
+
+    from {
+
+        transform:
+            translateY(0);
+    }
+
+    to {
+
+        transform:
+            translateY(-120vh);
+    }
+}
+
+
+@keyframes sparkleAway {
+
+    from {
+
+        opacity: 1;
+
+        transform:
+            scale(1)
+            translateY(0);
+    }
+
+    to {
+
+        opacity: 0;
+
+        transform:
+            scale(.2)
+            translateY(-90px);
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width:600px) {
+
+    .intro-panel {
+
+        width: 145.1vh;
+
+        max-width: none;
+
+        transform:
+            translateY(-120vh)
+            scale(.72);
+    }
+
+
+    #nickname {
+
+        font-size:
+            clamp(
+                15px,
+                4vw,
+                25px
+            );
+    }
+
+
+    #intro.exiting
+    .intro-panel {
+
+        animation:
+            slideAwayMobile
+            800ms
+            cubic-bezier(.7,0,.2,1)
+            forwards;
+    }
+}
+
+
+@keyframes slideAwayMobile {
+
+    from {
+
+        transform:
+            translateY(0)
+            scale(.72);
+    }
+
+    to {
+
+        transform:
+            translateY(-130vh)
+            scale(.72);
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     WORLD
+===================================================== -->
+
+<main id="world"></main>
+
+
+<!-- =====================================================
+     FIREWORKS
+===================================================== -->
+
+<canvas id="fireworks"></canvas>
+
+
+<!-- =====================================================
+     BIRTHDAY MESSAGE
+===================================================== -->
+
+<div id="birthdayMessage">
+
+    Happy Birthday,<br>
+
+    Seonghyeon!
+
+</div>
+
+
+<!-- =====================================================
+     INTRO
+===================================================== -->
+
+<section
+    id="intro"
+    aria-label="Welcome"
+>
+
+
+    <div class="intro-panel">
+
+
+        <!-- nickname -->
+
+        <input
+            id="nickname"
+            type="text"
+            maxlength="20"
+            autocomplete="nickname"
+            placeholder="Your nickname"
+        >
+
+
+        <!-- invisible clickable area
+             over START THE WORLD! -->
+
+        <button
+            id="startButton"
+            aria-label="Start the world"
+        ></button>
+
+
+        <!-- sparkles -->
+
+        <span class="sparkle s1"></span>
+
+        <span class="sparkle s2"></span>
+
+        <span class="sparkle s3"></span>
+
+        <span class="sparkle s4"></span>
+
+        <span class="sparkle s5"></span>
+
+        <span class="sparkle s6"></span>
+
+
+    </div>
+
+</section>
+
+
+
+<script>
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const intro =
+    document.getElementById(
+        "intro"
+    );
+
+
+const nickname =
+    document.getElementById(
+        "nickname"
+    );
+
+
+const startButton =
+    document.getElementById(
+        "startButton"
+    );
+
+
+const world =
+    document.getElementById(
+        "world"
+    );
+
+
+const birthdayMessage =
+    document.getElementById(
+        "birthdayMessage"
+    );
+
+
+const canvas =
+    document.getElementById(
+        "fireworks"
+    );
+
+
+const ctx =
+    canvas.getContext("2d");
+
+
+
+/* =========================================================
+   REMEMBER NICKNAME
+========================================================= */
+
+const savedName =
+    localStorage.getItem(
+        "seonghyeonNickname"
+    );
+
+
+if (savedName) {
+
+    nickname.value =
+        savedName;
+}
+
+
+
+/* =========================================================
+   FIREWORK SYSTEM
+========================================================= */
+
+let width;
+let height;
+let particles = [];
+let fireworks = [];
+
+
+/*
+   IMPORTANT:
+
+   Use setTransform instead of
+   repeatedly calling ctx.scale()
+   so resizing doesn't multiply
+   the canvas scale.
+*/
+
+function resizeCanvas() {
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    width =
+        window.innerWidth;
+
+
+    height =
+        window.innerHeight;
+
+
+    canvas.width =
+        width * dpr;
+
+
+    canvas.height =
+        height * dpr;
+
+
+    canvas.style.width =
+        width + "px";
+
+
+    canvas.style.height =
+        height + "px";
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+}
+
+
+window.addEventListener(
+    "resize",
+    resizeCanvas
+);
+
+
+resizeCanvas();
+
+
+
+/* =========================================================
+   FIREWORK PARTICLE
+========================================================= */
+
+class Particle {
+
+    constructor(
+        x,
+        y,
+        vx,
+        vy,
+        life
+    ) {
+
+        this.x = x;
+        this.y = y;
+
+        this.vx = vx;
+        this.vy = vy;
+
+        this.life = life;
+
+        this.maxLife =
+            life;
+
+        this.gravity =
+            0.045;
+
+        this.friction =
+            0.985;
+
+        this.size =
+            Math.random() * 2 + 1;
+    }
+
+
+    update() {
+
+        this.vx *=
+            this.friction;
+
+        this.vy *=
+            this.friction;
+
+        this.vy +=
+            this.gravity;
+
+        this.x +=
+            this.vx;
+
+        this.y +=
+            this.vy;
+
+        this.life--;
+    }
+
+
+    draw() {
+
+        const alpha =
+            this.life /
+            this.maxLife;
+
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            this.x,
+            this.y,
+            this.size,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(255,255,255,${alpha})`;
+
+
+        ctx.shadowBlur =
+            12;
+
+
+        ctx.shadowColor =
+            "rgba(130,190,255,.9)";
+
+
+        ctx.fill();
+
+
+        ctx.shadowBlur =
+            0;
+    }
+}
+
+
+
+/* =========================================================
+   FIREWORK ROCKET
+========================================================= */
+
+class Firework {
+
+    constructor(
+        x,
+        targetY
+    ) {
+
+        this.x = x;
+
+        this.y =
+            height + 10;
+
+        this.targetY =
+            targetY;
+
+        this.vy =
+            -(8 + Math.random() * 3);
+
+        this.exploded =
+            false;
+    }
+
+
+    update() {
+
+        this.y +=
+            this.vy;
+
+
+        this.vy +=
+            0.06;
+
+
+        if (
+            this.y <=
+            this.targetY
+        ) {
+
+            this.explode();
+
+            return false;
+        }
+
+
+        return true;
+    }
+
+
+    explode() {
+
+        this.exploded =
+            true;
+
+
+        const amount =
+            70 +
+            Math.floor(
+                Math.random() * 35
+            );
+
+
+        for (
+            let i = 0;
+            i < amount;
+            i++
+        ) {
+
+            const angle =
+                Math.random()
+                * Math.PI
+                * 2;
+
+
+            const speed =
+                Math.random()
+                * 5.5
+                + 1.5;
+
+
+            particles.push(
+
+                new Particle(
+
+                    this.x,
+                    this.y,
+
+                    Math.cos(angle)
+                    * speed,
+
+                    Math.sin(angle)
+                    * speed,
+
+                    60 +
+                    Math.random()
+                    * 35
+                )
+            );
+        }
+    }
+
+
+    draw() {
+
+        ctx.beginPath();
+
+
+        ctx.arc(
+            this.x,
+            this.y,
+            2,
+            0,
+            Math.PI * 2
+        );
+
+
+        ctx.fillStyle =
+            "white";
+
+
+        ctx.shadowBlur =
+            15;
+
+
+        ctx.shadowColor =
+            "#8cc8ff";
+
+
+        ctx.fill();
+
+
+        ctx.shadowBlur =
+            0;
+    }
+}
+
+
+
+/* =========================================================
+   LAUNCH FIREWORK
+========================================================= */
+
+function launchFirework(
+    x = Math.random() * width
+) {
+
+    fireworks.push(
+
+        new Firework(
+
+            x,
+
+            height *
+            (
+                .18 +
+                Math.random() * .38
+            )
+        )
+    );
+}
+
+
+
+/* =========================================================
+   FIREWORK LOOP
+========================================================= */
+
+function animateFireworks() {
+
+    /*
+       Slight fade instead of clearing
+       completely creates beautiful trails.
+    */
+
+    ctx.fillStyle =
+        "rgba(3,11,29,.18)";
+
+
+    ctx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /*
+       Rockets
+    */
+
+    for (
+        let i = fireworks.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const rocket =
+            fireworks[i];
+
+
+        const alive =
+            rocket.update();
+
+
+        rocket.draw();
+
+
+        if (!alive) {
+
+            fireworks.splice(
+                i,
+                1
+            );
+        }
+    }
+
+
+    /*
+       Explosion particles
+    */
+
+    for (
+        let i = particles.length - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const particle =
+            particles[i];
+
+
+        particle.update();
+
+        particle.draw();
+
+
+        if (
+            particle.life <= 0
+        ) {
+
+            particles.splice(
+                i,
+                1
+            );
+        }
+    }
+
+
+    requestAnimationFrame(
+        animateFireworks
+    );
+}
+
+
+animateFireworks();
+
+
+
+/* =========================================================
+   AUTOMATIC FIREWORKS
+========================================================= */
+
+let fireworksStarted =
+    false;
+
+
+function startFireworks() {
+
+    if (
+        fireworksStarted
+    ) return;
+
+
+    fireworksStarted =
+        true;
+
+
+    /*
+       First explosion:
+       immediately after entering
+    */
+
+    launchFirework(
+        width * .25
+    );
+
+
+    setTimeout(
+        () =>
+            launchFirework(
+                width * .72
+            ),
+        180
+    );
+
+
+    setTimeout(
+        () =>
+            launchFirework(
+                width * .50
+            ),
+        380
+    );
+
+
+    /*
+       Continue fireworks
+       every ~550ms
+    */
+
+    setInterval(
+        () => {
+
+            launchFirework();
+
+        },
+        550
+    );
+
+
+    /*
+       Occasional double fireworks
+    */
+
+    setInterval(
+        () => {
+
+            if (
+                Math.random() > .45
+            ) {
+
+                launchFirework(
+                    Math.random()
+                    * width
+                );
+
+            }
+
+        },
+        1100
+    );
+}
+
+
+
+/* =========================================================
+   START WORLD
+========================================================= */
+
+function startWorld() {
+
+    const name =
+        nickname.value.trim();
+
+
+    /*
+       No nickname?
+       Shake input.
+    */
+
+    if (!name) {
+
+        nickname.animate(
+
+            [
+
+                {
+                    transform:
+                        "translateX(0)"
+                },
+
+                {
+                    transform:
+                        "translateX(-8px)"
+                },
+
+                {
+                    transform:
+                        "translateX(8px)"
+                },
+
+                {
+                    transform:
+                        "translateX(-5px)"
+                },
+
+                {
+                    transform:
+                        "translateX(0)"
+                }
+
+            ],
+
+            {
+                duration: 380,
+
+                easing:
+                    "ease-out"
+            }
+
+        );
+
+
+        nickname.focus();
+
+        return;
+    }
+
+
+
+    /*
+       Save nickname
+    */
+
+    localStorage.setItem(
+        "seonghyeonNickname",
+        name
+    );
+
+
+
+    /*
+       INTRO STARTS LEAVING
+    */
+
+    intro.classList.add(
+        "exiting"
+    );
+
+
+
+    /*
+       Wait a little so the
+       panel starts sliding first.
+    */
+
+    setTimeout(
+        () => {
+
+            intro.classList.add(
+                "closing"
+            );
+
+        },
+        420
+    );
+
+
+
+    /*
+       Switch world to night.
+    */
+
+    setTimeout(
+        () => {
+
+            world.classList.add(
+                "night"
+            );
+
+        },
+        350
+    );
+
+
+
+    /*
+       FIREWORKS START
+    */
+
+    setTimeout(
+        () => {
+
+            startFireworks();
+
+        },
+        650
+    );
+
+
+
+    /*
+       HAPPY BIRTHDAY APPEARS
+    */
+
+    setTimeout(
+        () => {
+
+            birthdayMessage.classList.add(
+                "show"
+            );
+
+        },
+        850
+    );
+
+
+
+    /*
+       Tell the rest of the website
+       that the world has started.
+    */
+
+    document.dispatchEvent(
+
+        new CustomEvent(
+            "birthdayWorldStarted",
+            {
+                detail: {
+                    nickname: name
+                }
+            }
+        )
+
+    );
+}
+
+
+
+/* =========================================================
+   START BUTTON
+========================================================= */
+
+startButton.addEventListener(
+    "click",
+    startWorld
+);
+
+
+
+/* =========================================================
+   ENTER KEY
+========================================================= */
+
+nickname.addEventListener(
+    "keydown",
+    (event) => {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            startWorld();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   CLICK ANYWHERE AFTER WORLD STARTS
+   = EXTRA FIREWORK
+========================================================= */
+
+document.addEventListener(
+    "click",
+    (event) => {
+
+        /*
+           Don't trigger this while
+           intro is still visible.
+        */
+
+        if (
+            !intro.classList.contains(
+                "closing"
+            )
+        ) return;
+
+
+        launchFirework(
+            event.clientX
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
